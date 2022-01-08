@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="banch">성능 테스트</div>
+    <div class="banch" @click="banchClick()">성능 테스트</div>
     <div class="dash">대시보드</div>
     <template v-if="true">
       <div class="sign-up">회원가입</div>
@@ -11,7 +11,17 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'Header',
+  methods: {
+    banchClick() {
+      this.$router.push({ name: 'Main' }).catch(() => {})
+    },
+    dashClick() {},
+    signUpClick() {},
+    signInClick() {},
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -40,7 +50,7 @@ export default {}
 
     font-family: 'Noto Sans KR', sans-serif;
     font-weight: 600;
-    font-size: 22px;
+    font-size: 20px;
     user-select: none;
     cursor: pointer;
   }
