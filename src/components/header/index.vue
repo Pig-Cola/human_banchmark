@@ -25,7 +25,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR');
+@font-face {
+    font-family: 'SANGJUGyeongcheonIsland';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANGJUGyeongcheonIsland.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
 .header {
   width: 50%;
@@ -48,8 +53,7 @@ export default {
     display: flex;
     align-items: center;
 
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 600;
+    font-family: 'SANGJUGyeongcheonIsland', sans-serif;
     font-size: 20px;
     user-select: none;
     cursor: pointer;
