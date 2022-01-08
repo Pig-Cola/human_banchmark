@@ -22,8 +22,42 @@ export default new VueRouter({
     {
       path: '/',
       name: 'Main',
-      component: Main
-    }
+      component: Main,
+    },
+    {
+      path: '/test/reaction',
+      name: 'Reaction',
+      component: Main,
+      props: { testType: 'reaction' },
+    },
+    {
+      path: '/test/sequence',
+      name: 'Sequence',
+      component: Main,
+      props: { testType: 'sequence' },
+    },
+    {
+      path: '/test/aim',
+      name: 'Aim',
+      component: Main,
+      props: { testType: 'aim' },
+    },
+    {
+      path: '/test/number',
+      name: 'Number',
+      component: Main,
+      props: { testType: 'number' },
+    },
+    {
+      path: '/test/word',
+      name: 'Word',
+      component: Main,
+      props: { testType: 'word' },
+    },
+    {
+      path: '*',
+      redirect: { name: 'Main' },
+    },
   ],
   mode: 'history',
 })
