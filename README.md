@@ -1,24 +1,9 @@
 # human_bachmark
-
+Create by pig-cola \[Hwang Dae-Seong\]
 ## Project setup
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+해당 웹 페이지는 React로 제작된 [humanbenchmark](https://humanbenchmark.com/) 페이지를<br>
+모티브로 하여 Vue를 사용하여 제작중에 있습니다.
