@@ -1,5 +1,5 @@
 # human_bachmark
-Create by pig-cola \[Hwang Dae-Seong\]
+Create by [pig-cola](https://github.com/Pig-Cola) \[Hwang Dae-Seong\]
 ## Project setup
 ```
 npm install
