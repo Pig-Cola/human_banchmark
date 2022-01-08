@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <play>
+    <play class="play">
       <div class="icon">{{ testIcon }}</div>
       <div class="title">{{ testTitle }}</div>
       <div v-html="testDescription" class="description"></div>
@@ -95,48 +95,74 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@font-face {
+  font-family: 'SANGJUGyeongcheonIsland';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANGJUGyeongcheonIsland.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
 .main {
   width: 100%;
 
-  .icon {
-    flex: 0 0 50px;
+  .play {
+    width: 100%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    .title,
+    .description,
+    .icon {
+      color: #ffffff;
+    }
 
-  .title {
-    flex: 0 0 100px;
+    .icon {
+      flex: 0 0 50px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  .description {
-    flex: 0 0 50px;
+    .title {
+      flex: 0 0 100px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-  .start-btn {
-    flex: 0 0 50px;
-    width: 100px;
-    height: 50px;
+      font-family: 'SANGJUGyeongcheonIsland';
+      font-size: 70px;
+    }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .description {
+      flex: 0 0 50px;
 
-    border-radius: 7px;
-    background-color: #ffff00;
-    cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    &:hover {
-      background-color: #ffffff;
+      font-family: 'Nanum Gothic', sans-serif;
+      font-size: 18px;
+      line-height: 25px;
+    }
+
+    .start-btn {
+      flex: 0 0 50px;
+      width: 100px;
+      height: 50px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 7px;
+      background-color: #ffff00;
+      cursor: pointer;
+      font-family: 'SANGJUGyeongcheonIsland';
+
+      &:hover {
+        background-color: #ffffff;
+      }
     }
   }
 }
