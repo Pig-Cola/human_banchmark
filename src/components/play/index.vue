@@ -1,8 +1,6 @@
 <template>
   <div class="play" @mousedown="playClick($event)">
-    <div class="play-area">
-        <slot></slot>
-    </div>
+    <slot></slot>
   </div>
 </template>
 
@@ -23,6 +21,7 @@ export default {
   height: 600px;
 
   display: flex;
+  flex-flow: column nowrap;
   align-items: center;
   justify-content: center;
 
@@ -30,15 +29,5 @@ export default {
   background-color: #2b87d1;
   padding-top: 50px;
   padding-bottom: 50px;
-
-  .play-area {
-    width: 50%;
-    height: 100%;
-
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: space-evenly;
-  }
 }
 </style>
