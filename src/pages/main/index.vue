@@ -1,10 +1,13 @@
 <template>
   <div class="main">
-    <play class="play">
-      <div class="icon">{{ testIcon }}</div>
-      <div class="title">{{ testTitle }}</div>
-      <div v-html="testDescription" class="description"></div>
-      <div class="start-btn" @click="startClick()">시작</div>
+    <test v-if="isPlayed" :testType="testType"></test>
+    <play v-else class="play">
+      <div class="play-area">
+        <div class="icon">{{ testIcon }}</div>
+        <div class="title">{{ testTitle }}</div>
+        <div v-html="testDescription" class="description"></div>
+        <div class="start-btn" @click="startClick()">시작</div>
+      </div>
     </play>
   </div>
 </template>
@@ -12,11 +15,11 @@
 <script>
 import _ from 'lodash'
 import Play from '@/components/play'
-import description from './description'
+import Test from '@/components/test'
 
 export default {
   name: 'Main',
-  components: { Play },
+  components: { Play, Test },
   props: {
     testType: {
       type: String,
@@ -26,82 +29,51 @@ export default {
 
   data() {
     return {
-      testTypeMap: {
-        banchmark: {
-          title: '성능 테스트',
-          description: description.banchmark,
-          icon: '',
-        },
-        reaction: {
-          title: '반응 속도',
-          description: description.reaction,
-          icon: '',
-        },
-        sequence: {
-          title: '순서 기억',
-          description: description.sequence,
-          icon: '',
-        },
-        aim: {
-          title: '표적 누르기',
-          description: description.aim,
-          icon: '',
-        },
-        number: {
-          title: '숫자 기억하기',
-          description: description.number,
-          icon: '',
-        },
-        word: {
-          title: '단어 기억하기',
-          description: description.word,
-          icon: '',
-        },
-      },
+      play: false,
     }
   },
 
   computed: {
     testInfo() {
-      return this.testTypeMap[this.testType]
+      return this.$store.getters.info(this.testType)
+    },
+    typeList() {
+      return this.$store.getters.typeList
+    },
+
+    testIcon() {
+      return this.testInfo.icon
     },
     testTitle() {
       return this.testInfo.title
     },
     testDescription() {
-      return this.testInfo.description.split('\n').join('<br>')
+      return this.testInfo.description
     },
-    testIcon() {
-      return this.testInfo.icon
+
+    isPlayed() {
+      return this.testType !== 'banchmark' && this.play
     },
   },
 
   methods: {
     startClick() {
       if (this.testType === 'banchmark') {
-        let temp = { ...description }
-        delete temp.banchmark
-
-        let testTypeArray = Object.keys(temp)
-        let target = testTypeArray[_.random(0, testTypeArray.length - 1)]
+        let target = this.typeList[_.random(0, this.typeList.length - 1)]
         let name = `${target[0].toUpperCase() + target.slice(1)}`
 
+        this.play = false
         this.$router.push({ name })
         return
       }
+
+      this.play = true
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-@font-face {
-  font-family: 'SANGJUGyeongcheonIsland';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANGJUGyeongcheonIsland.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-@import url(//fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 .main {
   width: 100%;
@@ -109,59 +81,69 @@ export default {
   .play {
     width: 100%;
 
-    .title,
-    .description,
-    .icon {
-      color: #ffffff;
-    }
-
-    .icon {
-      flex: 0 0 50px;
+    .play-area {
+      width: 50%;
+      height: 100%;
 
       display: flex;
+      flex-flow: column nowrap;
       align-items: center;
-      justify-content: center;
-    }
+      justify-content: space-evenly;
 
-    .title {
-      flex: 0 0 100px;
+      .title,
+      .description,
+      .icon {
+        color: #ffffff;
+      }
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      .icon {
+        flex: 0 0 50px;
 
-      font-family: 'SANGJUGyeongcheonIsland';
-      font-size: 70px;
-    }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-    .description {
-      flex: 0 0 50px;
+      .title {
+        flex: 0 0 100px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-      font-family: 'Nanum Gothic', sans-serif;
-      font-size: 18px;
-      line-height: 25px;
-    }
+        font-family: 'SANGJUGyeongcheonIsland';
+        font-size: 70px;
+      }
 
-    .start-btn {
-      flex: 0 0 50px;
-      width: 100px;
-      height: 50px;
+      .description {
+        flex: 0 0 50px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-      border-radius: 7px;
-      background-color: #ffff00;
-      cursor: pointer;
-      font-family: 'SANGJUGyeongcheonIsland';
+        font-family: 'Nanum Gothic', sans-serif;
+        font-size: 18px;
+        line-height: 25px;
+      }
 
-      &:hover {
-        background-color: #ffffff;
+      .start-btn {
+        flex: 0 0 50px;
+        width: 100px;
+        height: 50px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 7px;
+        background-color: #ffff00;
+        cursor: pointer;
+        font-family: 'SANGJUGyeongcheonIsland';
+
+        &:hover {
+          background-color: #ffffff;
+        }
       }
     }
   }
