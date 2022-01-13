@@ -39,7 +39,7 @@ export default {
       isFinished: false,
 
       initData: {
-        level: 0, 
+        level: 0,
         speed: 600,
 
         activedTile: 0,
@@ -95,9 +95,9 @@ export default {
       for (let i of this.playInfo.tile) {
         await this.nextTile(i)
         this.btnSound(i)
-        this.$nextTick(() => {
+        setTimeout(() => {
           this.playInfo.activedTile = 0
-        })
+        }, 50)
       }
       this.playInfo.verificateTile = [...this.playInfo.tile]
     },
@@ -131,13 +131,13 @@ export default {
     },
 
     btnSound(n) {
-      this.audio.triggerAttackRelease(this.sounds[n-1], '60n')
+      this.audio.triggerAttackRelease(this.sounds[n - 1], '60n')
     },
     errSound() {
       let now = this.audio.now()
       this.audio.triggerAttackRelease('b1', '60n', now)
       this.audio.triggerAttackRelease('b1', '60n', now + 0.15)
-    }
+    },
   },
 }
 </script>
