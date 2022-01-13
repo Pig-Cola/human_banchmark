@@ -19,12 +19,21 @@
 
           <template v-else>
             <div>평균 반응 속도</div>
-            <div>{{ playInfo.totalScore | int | numberComma }}ms {{ `${playInfo.count}/${maxCount}` }}</div>
+            <div>
+              {{ playInfo.totalScore | int | numberComma }}ms {{ `${playInfo.count}/${maxCount}` }}
+            </div>
+
             <div v-if="!isFinished" class="next-play" @click="setupInit()">
               <div>계속하기</div>
             </div>
-            <div v-else class="next-play">
-              <div>결과보기</div>
+
+            <div v-else class="btns">
+              <div class="again" @click="reset()">
+                <div>다시하기</div>
+              </div>
+              <div class="next-play">
+                <div>결과보기</div>
+              </div>
             </div>
           </template>
         </template>
@@ -43,7 +52,7 @@ export default {
   components: { Play },
   data() {
     return {
-      maxCount: 3, // 진행 될 테스트 횟수
+      maxCount: 5, // 진행 될 테스트 횟수
       isStarted: true,
       early: false,
       isFinished: false,
@@ -65,7 +74,7 @@ export default {
   },
 
   mounted() {
-    this.setupInit()
+    this.reset()
   },
 
   computed: {
@@ -78,6 +87,18 @@ export default {
   },
 
   methods: {
+    reset() {
+      this.isStarted = true
+      this.early = false
+      ;(this.isFinished = false), (this.setupId = 0)
+
+      this.playInfo = {
+        totalScore: 0,
+        count: 0,
+        scoreList: [],
+      }
+      this.setupInit()
+    },
     setupInit() {
       this.currentPlay = {
         ...this.currentPlay,
@@ -164,7 +185,8 @@ export default {
         font-family: 'Nanum Gothic', sans-serif;
       }
 
-      .next-play {
+      .next-play,
+      .again {
         width: 100px;
         height: 50px;
 
@@ -185,6 +207,15 @@ export default {
           color: #000;
           font-family: 'SANGJUGyeongcheonIsland';
         }
+      }
+
+      .btns {
+        width: 100%;
+        height: 150px;
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
       }
     }
   }
