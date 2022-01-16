@@ -1,13 +1,9 @@
 <template>
   <div class="sequence">
     <play class="play">
-      <div v-if="isFinished" class="result-box">
-        <div class="score">{{ playInfo.level }}단계</div>
-        <div class="btns">
-          <div class="again" @click="initInfo()"><div>다시하기</div></div>
-          <div class="result"><div>결과보기</div></div>
-        </div>
-      </div>
+      <result v-if="isFinished" @retry="''">
+
+      </result>
 
       <template v-else>
         <div class="level">{{ playInfo.level }}단계</div>
@@ -29,10 +25,11 @@ import _ from 'lodash'
 import { Synth } from 'tone'
 
 import Play from '@/components/play'
+import Result from '@/components/result'
 
 export default {
   name: 'Sequence',
-  components: { Play },
+  components: { Play, Result },
 
   data() {
     return {
