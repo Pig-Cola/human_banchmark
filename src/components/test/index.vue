@@ -2,16 +2,18 @@
   <div class="test">
     <reaction v-if="testType === 'reaction'"></reaction>
     <sequence v-else-if="testType === 'sequence'"></sequence>
+    <word v-else-if="testType === 'word'"></word>
   </div>
 </template>
 
 <script>
 import Reaction from './reaction'
 import Sequence from './sequence'
+import Word from './word'
 
 export default {
   name: 'Test',
-  components: { Reaction, Sequence },
+  components: { Reaction, Sequence, Word },
   props: {
     testType: {
       type: String,
