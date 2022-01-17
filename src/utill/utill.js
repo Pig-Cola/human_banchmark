@@ -1,6 +1,12 @@
 import _ from 'lodash'
 import { Synth } from 'tone'
 
+// /**
+//  *
+//  * sound
+//  *
+//  */
+
 export const audio = new Synth().toDestination()
 audio.volume.value = -4
 
@@ -13,8 +19,15 @@ export const errSound = () => {
   audio.triggerAttackRelease('c2', '60n', now + 0.15)
 }
 
+// /**
+//  *
+//  * etc
+//  *
+//  */
+
 /**
  * #### 정수형으로 만듬(소수 버림)
+ *
  * @param {number|string} n 숫자 또는 숫자로 구성된 문자열
  * @returns {number} int */
 export const toInt = (n) => {
@@ -24,7 +37,9 @@ export const toInt = (n) => {
 
 /**
  * #### 문자열 뒤집기
+ *
  * ex) 'abcde' => 'edcba'
+ *
  * @param {string} str 뒤집으려는 문자열
  * @returns {string} 뒤집힌 문자열
  */
@@ -34,7 +49,9 @@ export const stringReverse = (str) => {
 
 /**
  * #### ','가 들어간 숫자(문자열)로 만든다.
+ *
  * ex) 12345 => '12,345'
+ *
  * @param {number|string} n 숫자 또는 숫자로 구성된 문자열
  * @returns {string} string
  */
