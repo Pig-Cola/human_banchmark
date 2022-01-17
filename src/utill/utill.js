@@ -1,4 +1,17 @@
 import _ from 'lodash'
+import { Synth } from 'tone'
+
+export const audio = new Synth().toDestination()
+audio.volume.value = -4
+
+/**
+ * #### 틀리거나 잘못된 조작을 했을 때 소리
+ */
+export const errSound = () => {
+  let now = audio.now()
+  audio.triggerAttackRelease('c2', '60n', now)
+  audio.triggerAttackRelease('c2', '60n', now + 0.15)
+}
 
 /**
  * #### 정수형으로 만듬(소수 버림)

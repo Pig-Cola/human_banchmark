@@ -1,7 +1,7 @@
 <template>
   <div class="sequence">
     <play class="play">
-      <result v-if="isFinished" @retry="''">
+      <result v-if="isFinished" @retry="reset()">
 
       </result>
 
@@ -22,7 +22,7 @@
 
 <script>
 import _ from 'lodash'
-import { Synth } from 'tone'
+import utill from '@/utill'
 
 import Play from '@/components/play'
 import Result from '@/components/result'
@@ -51,14 +51,12 @@ export default {
         verificateTile: [0], // = [...tile]
       },
 
-      audio: new Synth().toDestination(),
-      sounds: ['f2', 'g2', 'a2', 'b2', 'c3', 'd3', 'e3', 'f3', 'g3'],
+      sounds: ['g#2', 'a2', 'a#2', 'b2', 'c3', 'c#3', 'd3', 'd#3', 'e3'],
     }
   },
 
   mounted() {
-    this.initInfo()
-    this.audio.volume.value = -7
+    this.reset()
   },
 
   computed: {
@@ -71,7 +69,7 @@ export default {
   },
 
   methods: {
-    initInfo() {
+    reset() {
       this.playInfo = { ...this.playInfo, ...this.initData }
       this.playInfo.tile = []
       this.isFinished = false
@@ -128,12 +126,10 @@ export default {
     },
 
     btnSound(n) {
-      this.audio.triggerAttackRelease(this.sounds[n - 1], '60n')
+      utill.audio.triggerAttackRelease(this.sounds[n - 1], '60n')
     },
     errSound() {
-      let now = this.audio.now()
-      this.audio.triggerAttackRelease('b1', '60n', now)
-      this.audio.triggerAttackRelease('b1', '60n', now + 0.15)
+      utill.errSound()
     },
   },
 }
