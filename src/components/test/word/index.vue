@@ -3,7 +3,7 @@
     <play class="play">
       <div class="play-word">
         <div class="lives">목숨: {{ lives }}</div>
-        <div class="level">레벨: {{ level }}</div>
+        <div class="level">스코어: {{ score }}</div>
         <div class="current-word">{{ displayWord }}</div>
         <div @mousedown="clickExisted()" class="existed-word-btn">이미 등장한 단어</div>
         <div @mousedown="clickNew()" class="new-word-btn">처음 등장한 단어</div>
@@ -30,7 +30,7 @@ export default {
         myWords: ['', ''],
         displayWord: '',
         lives: 0,
-        level: 0,
+        score: 0,
       },
     }
   },
@@ -58,8 +58,8 @@ export default {
       return this.gameInfo.lives
     },
     /**@type {()=>number} */
-    level() {
-      return this.gameInfo.level
+    score() {
+      return this.gameInfo.score
     },
 
     /**@type {()=>{[x:string]: boolean}} */
@@ -79,7 +79,7 @@ export default {
         myWords: [],
         displayWord: '',
         lives: 3,
-        level: 1,
+        score: 1,
       }
 
       this.randomWork()
@@ -114,7 +114,7 @@ export default {
       return word === this.displayWord ? this.makeExistedWord() : word
     },
     success() {
-      this.gameInfo.level += 1
+      this.gameInfo.score += 1
       this.randomWork()
     },
     fail() {
