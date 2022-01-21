@@ -1,8 +1,13 @@
 <template>
   <div class="word">
-    <play>
-      <p>{{ displayWord }}</p>
-      <div @click="randomWork()">next</div>
+    <play class="play">
+      <div class="play-word">
+        <div class="lives">목숨: {{ lives }}</div>
+        <div class="level">레벨: {{ level }}</div>
+        <div class="current-word">{{ displayWord }}</div>
+        <div @mousedown="clickExisted()" class="existed-word-btn">이미 등장한 단어</div>
+        <div @mousedown="clickNew()" class="new-word-btn">처음 등장한 단어</div>
+      </div>
     </play>
   </div>
 </template>
@@ -24,6 +29,8 @@ export default {
       gameInfo: {
         myWords: ['', ''],
         displayWord: '',
+        lives: 0,
+        level: 0,
       },
     }
   },
@@ -33,13 +40,34 @@ export default {
   },
 
   computed: {
+    /**@type {()=>boolean} */
+    isNotEnoughtLength() {
+      return this.gameInfo.myWords.length < 3
+    },
+    /**@type {()=>boolean} */
+    isExistedWord() {
+      return this.myWordsMap[this.displayWord] || false
+    },
+
     /**@type {()=>string} */
     displayWord() {
       return this.gameInfo.displayWord
     },
-    /**@type {()=>boolean} */
-    isNotEnoughtLength() {
-      return this.gameInfo.myWords.length < 3
+    /**@type {()=>number} */
+    lives() {
+      return this.gameInfo.lives
+    },
+    /**@type {()=>number} */
+    level() {
+      return this.gameInfo.level
+    },
+
+    /**@type {()=>{[x:string]: boolean}} */
+    myWordsMap() {
+      return _(this.gameInfo.myWords)
+        .map((v) => [v, true])
+        .fromPairs()
+        .value()
     },
   },
 
@@ -50,51 +78,135 @@ export default {
       this.gameInfo = {
         myWords: [],
         displayWord: '',
+        lives: 3,
+        level: 1,
       }
 
       this.randomWork()
-      this.displayWord
     },
 
     randomWork() {
       let displayWord = ''
 
       if (this.isNotEnoughtLength) {
-        displayWord = this.appendWord()
+        displayWord = this.makeNewWord()
       } else {
         let rand = _.random(0, 1)
 
         if (rand) {
-          displayWord = this.appendWord()
+          displayWord = this.makeNewWord()
         } else {
-          displayWord = this.existedWord()
+          displayWord = this.makeExistedWord()
         }
       }
 
       this.gameInfo.displayWord = displayWord
     },
-
-    appendWord() {
+    makeNewWord() {
       let rand = _.random(0, this.words.length - 1)
       let newWord = this.words.splice(rand, 1)
-      this.gameInfo.myWords.push(newWord[0])
       return newWord[0]
     },
-    existedWord() {
+    /**@type {()=>function|string} */
+    makeExistedWord() {
       let rand = _.random(0, this.gameInfo.myWords.length - 1)
       let word = this.gameInfo.myWords[rand]
+      return word === this.displayWord ? this.makeExistedWord() : word
+    },
+    success() {
+      this.gameInfo.level += 1
+      this.randomWork()
+    },
+    fail() {
+      this.gameInfo.lives -= 1
+      if (this.gameInfo.lives < 1) {
+        this.isFinished = true
+        return
+      }
+      this.randomWork()
+    },
 
-      return word !== this.displayWord ? word : this.existedWord()
+    clickExisted() {
+      if (this.isExistedWord) {
+        this.success()
+      } else {
+        this.gameInfo.myWords.push(this.displayWord)
+        this.fail()
+      }
+    },
+    clickNew() {
+      if (this.isExistedWord) {
+        this.fail()
+      } else {
+        this.gameInfo.myWords.push(this.displayWord)
+        this.success()
+      }
     },
   },
-
-  // computed: {
-  //   displayWord() {
-  //     return this.gameInfo.displayWord
-  //   },
-  // },
 }
 </script>
 
 <style lang="scss" scoped>
+.word {
+  width: 100%;
+  height: 100%;
+
+  .play {
+    .play-word {
+      width: 50%;
+      height: 100%;
+
+      display: grid;
+      grid-template-areas:
+        'lives level'
+        'current-word current-word'
+        'existed-word-btn new-word-btn'
+        '. .';
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: minmax(0, 1fr) minmax(0, 3fr) minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      justify-items: center;
+      column-gap: 40px;
+
+      color: #fff;
+
+      .current-word {
+        grid-area: current-word;
+
+        font-size: 70px;
+      }
+      .existed-word-btn {
+        grid-area: existed-word-btn;
+        justify-self: end;
+      }
+      .new-word-btn {
+        grid-area: new-word-btn;
+        justify-self: start;
+      }
+      .lives {
+        grid-area: lives;
+        justify-self: end;
+      }
+      .level {
+        grid-area: level;
+        justify-self: start;
+      }
+
+      .existed-word-btn,
+      .new-word-btn {
+        width: 150px;
+        height: 50px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: #ffff00;
+        border-radius: 7px;
+        color: #000;
+        font-weight: bold;
+      }
+    }
+  }
+}
 </style>
