@@ -19,7 +19,7 @@ export default {
     testType: String,
   },
   computed: {
-    /**@type {()=>{icon:string, title:string, description:string}} */
+    /**@type { ()=>{icon:string, title:string, description:string} } */
     testInfo() {
       return this.$store.getters.info(this.testType)
     },
@@ -57,6 +57,7 @@ export default {
   grid-template-columns: minmax(0, 1fr);
   align-content: center;
   justify-content: center;
+  row-gap: 10px;
 
   .test-icon {
     grid-area: test-icon;
