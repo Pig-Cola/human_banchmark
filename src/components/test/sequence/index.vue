@@ -1,8 +1,8 @@
 <template>
   <div class="sequence">
     <play class="play">
-      <result v-if="isFinished" @retry="reset()">
-
+      <result v-if="isFinished" @retry="reset()" :testType="'sequence'">
+        <div>{{playInfo.level}}단계</div>
       </result>
 
       <template v-else>
