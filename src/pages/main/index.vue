@@ -34,23 +34,29 @@ export default {
   },
 
   computed: {
+    /**@type { ()=>{ title: string, description: string, icon: string } } */
     testInfo() {
       return this.$store.getters.info(this.testType)
     },
+    /**@type { ()=>string[] } */
     typeList() {
       return this.$store.getters.typeList
     },
 
+    /**@type { ()=>string } */
     testIcon() {
       return this.testInfo.icon
     },
+    /**@type { ()=>string } */
     testTitle() {
       return this.testInfo.title
     },
+    /**@type { ()=>string } */
     testDescription() {
       return this.testInfo.description
     },
 
+    /**@type { ()=>boolean } */
     isPlayed() {
       return this.testType !== 'banchmark' && this.play
     },
@@ -74,7 +80,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .main {
   width: 100%;
 
