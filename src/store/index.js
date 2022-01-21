@@ -9,8 +9,8 @@ export default new Vuex.Store({
       banchmark: '성능 테스트',
       reaction: '반응 속도',
       sequence: '순서 기억',
-      aim: '표적 누르기',
-      number: '숫자 기억하기',
+      // aim: '표적 누르기',
+      // number: '숫자 기억하기',
       word: '단어 기억하기',
     },
 

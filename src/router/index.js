@@ -36,18 +36,18 @@ export default new VueRouter({
       component: Main,
       props: { testType: 'sequence' },
     },
-    {
-      path: '/test/aim',
-      name: 'Aim',
-      component: Main,
-      props: { testType: 'aim' },
-    },
-    {
-      path: '/test/number',
-      name: 'Number',
-      component: Main,
-      props: { testType: 'number' },
-    },
+    // {
+    //   path: '/test/aim',
+    //   name: 'Aim',
+    //   component: Main,
+    //   props: { testType: 'aim' },
+    // },
+    // {
+    //   path: '/test/number',
+    //   name: 'Number',
+    //   component: Main,
+    //   props: { testType: 'number' },
+    // },
     {
       path: '/test/word',
       name: 'Word',
