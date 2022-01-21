@@ -18,6 +18,7 @@ export default {
   props: {
     testType: String,
   },
+
   computed: {
     /**@type { ()=>{icon:string, title:string, description:string} } */
     testInfo() {
@@ -31,6 +32,7 @@ export default {
       return this.testInfo.title
     },
   },
+
   methods: {
     clickRetry() {
       this.$emit('retry')
