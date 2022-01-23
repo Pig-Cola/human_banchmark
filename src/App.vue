@@ -17,7 +17,8 @@ export default {
 <style lang="scss">
 @font-face {
   font-family: 'SANGJUGyeongcheonIsland';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANGJUGyeongcheonIsland.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/SANGJUGyeongcheonIsland.woff')
+    format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,6 +26,9 @@ export default {
 
 #app {
   width: 100%;
+  height: 100%;
+
+  font-family: 'Nanum Gothic', sans-serif;
 
   // -webkit-font-smoothing: antialiased;
   // -moz-osx-font-smoothing: grayscale;
