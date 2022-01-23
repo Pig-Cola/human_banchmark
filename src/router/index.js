@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Main from '@/pages/main'
+import Test from '@/components/test'
+import Wrapper from '@/pages/wrapper'
 
 Vue.use(VueRouter)
 
@@ -53,6 +55,31 @@ export default new VueRouter({
       name: 'Word',
       component: Main,
       props: { testType: 'word' },
+    },
+    {
+      path: '/play',
+      component: Wrapper,
+      redirect: { name: 'Main' },
+      children: [
+        {
+          path: 'reaction',
+          name: 'PlayReaction',
+          component: Test,
+          props: { testType: 'reaction' },
+        },
+        {
+          path: 'sequence',
+          name: 'PlaySequence',
+          component: Test,
+          props: { testType: 'sequence' },
+        },
+        {
+          path: 'word',
+          name: 'PlayWord',
+          component: Test,
+          props: { testType: 'word' },
+        },
+      ],
     },
     {
       path: '*',

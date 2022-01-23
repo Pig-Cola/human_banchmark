@@ -1,6 +1,8 @@
 <template>
   <div class="result">
-    <div class="test-icon">아이콘</div>
+    <div class="test-icon">
+      <my-icon>{{ testIcon }}</my-icon>
+    </div>
     <div class="test-type">{{ testTitle }}</div>
     <div class="test-msg">
       <slot></slot>
@@ -25,9 +27,11 @@ export default {
       return this.$store.getters.info(this.testType)
     },
 
+    /**@type {()=>string} */
     testIcon() {
       return this.testInfo.icon
     },
+    /**@type {()=>string} */
     testTitle() {
       return this.testInfo.title
     },
@@ -69,6 +73,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .my-icon {
+      font-size: 60px;
+    }
   }
   .test-type {
     grid-area: test-type;

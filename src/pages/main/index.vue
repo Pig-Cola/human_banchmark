@@ -1,22 +1,21 @@
 <template>
   <div class="main">
-    <test v-if="isPlayed" :testType="testType"></test>
-    <template v-else>
-      <play class="play">
-        <div class="play-area">
-          <div class="icon"><my-icon :key="testIcon">{{ testIcon }}</my-icon></div>
-          <div class="title">{{ testTitle }}</div>
-          <div v-html="testDescription" class="description"></div>
-          <div class="start-btn" @click="startClick()">시작</div>
+    <play class="play">
+      <div class="play-area">
+        <div class="icon">
+          <my-icon :key="testIcon">{{ testIcon }}</my-icon>
         </div>
-      </play>
-      <!-- select slot -->
-      <div v-if="testType==='banchmark'" class="select-test-area">
-        <div class="thumb-wrapper">
-          <test-thumb v-for="type in typeList" :testType="type" :key="type"></test-thumb>
-        </div>
+        <div class="title">{{ testTitle }}</div>
+        <div v-html="testDescription" class="description"></div>
+        <div class="start-btn" @click="startClick()">시작</div>
       </div>
-    </template>
+    </play>
+    <!-- select slot -->
+    <div v-if="testType === 'banchmark'" class="select-test-area">
+      <div class="thumb-wrapper">
+        <test-thumb v-for="type in typeList" :testType="type" :key="type"></test-thumb>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,12 +35,6 @@ export default {
       type: String,
       default: 'banchmark',
     },
-  },
-
-  data() {
-    return {
-      play: false,
-    }
   },
 
   computed: {
@@ -79,12 +72,14 @@ export default {
         let target = this.typeList[_.random(0, this.typeList.length - 1)]
         let name = `${target[0].toUpperCase() + target.slice(1)}`
 
-        this.play = false
         this.$router.push({ name })
         return
       }
 
-      this.play = true
+      let target = this.testType
+      let name = `Play${target[0].toUpperCase() + target.slice(1)}`
+      console.log(name)
+      this.$router.push({ name })
     },
   },
 }
