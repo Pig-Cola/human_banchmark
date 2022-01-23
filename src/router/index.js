@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Main from '@/pages/main'
-import Test from '@/components/test'
-import Wrapper from '@/pages/wrapper'
+const Main = () => import(/* webpackChunkName: "group-main" */ '@/pages/main')
+const Test = () => import(/* webpackChunkName: "group-main" */ '@/components/test')
+const Wrapper = () => import(/* webpackChunkName: "group-main" */ '@/pages/wrapper')
 
 Vue.use(VueRouter)
 
