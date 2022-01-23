@@ -24,12 +24,11 @@ import _ from 'lodash'
 import utill from '@/utill'
 
 import Play from '@/components/play'
-import Test from '@/components/test'
 import TestThumb from '@/components/testThumb'
 
 export default {
   name: 'Main',
-  components: { Play, Test, TestThumb },
+  components: { Play, TestThumb },
   props: {
     testType: {
       type: String,
