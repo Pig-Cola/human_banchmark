@@ -3,20 +3,34 @@ import { Synth } from 'tone'
 
 // /**
 //  *
+//  * types
+//  *
+//  */
+
+/**
+ * @typedef {{
+ * title: string,
+ * description: string,
+ * icon: string,
+ * }} types.testInfo
+ */
+
+// /**
+//  *
 //  * sound
 //  *
 //  */
 
 export const audio = new Synth().toDestination()
-audio.volume.value = -4
+audio.volume.value = -2
 
 /**
  * #### 틀리거나 잘못된 조작을 했을 때 소리
  */
 export const errSound = () => {
   let now = audio.now()
-  audio.triggerAttackRelease('c2', '60n', now)
-  audio.triggerAttackRelease('c2', '60n', now + 0.15)
+  audio.triggerAttackRelease('a2', '16n', now)
+  audio.triggerAttackRelease('a2', '16n', now + 0.15)
 }
 
 // /**
@@ -73,4 +87,14 @@ export const numberComma = (n) => {
     .map((v) => v.join(''))
     .join(',')
   return stringReverse(temp) + rest
+}
+
+/**
+ * #### 개행 문자를 br로 치환
+ *
+ * @param {string} str
+ * @returns {string} \n이 <br>이 됨
+ */
+export const textLineSpace = (str) => {
+  return str.split('\n').join('<br>')
 }

@@ -10,17 +10,27 @@
           <div class="start-btn" @click="startClick()">시작</div>
         </div>
       </play>
+      <!-- select slot -->
+      <div v-if="testType==='banchmark'" class="select-test-area">
+        <div class="thumb-wrapper">
+          <test-thumb v-for="type in typeList" :testType="type" :key="type"></test-thumb>
+        </div>
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
 import _ from 'lodash'
+import utill from '@/utill'
+
 import Play from '@/components/play'
 import Test from '@/components/test'
+import TestThumb from '@/components/testThumb'
 
 export default {
   name: 'Main',
-  components: { Play, Test },
+  components: { Play, Test, TestThumb },
   props: {
     testType: {
       type: String,
@@ -35,7 +45,7 @@ export default {
   },
 
   computed: {
-    /**@type { ()=>{ title: string, description: string, icon: string } } */
+    /**@type { ()=>utill.types.testInfo } */
     testInfo() {
       return this.$store.getters.info(this.testType)
     },
@@ -54,7 +64,7 @@ export default {
     },
     /**@type { ()=>string } */
     testDescription() {
-      return this.testInfo.description
+      return utill.textLineSpace(this.testInfo.description)
     },
 
     /**@type { ()=>boolean } */
@@ -108,6 +118,10 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+
+        .my-icon {
+          font-size: 60px;
+        }
       }
 
       .title {
@@ -123,10 +137,6 @@ export default {
 
       .description {
         flex: 0 0 50px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
 
         font-family: 'Nanum Gothic', sans-serif;
         font-size: 18px;
@@ -151,6 +161,29 @@ export default {
           background-color: #ffffff;
         }
       }
+    }
+  }
+  .select-test-area {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-top: 50px;
+    padding-bottom: 50px;
+
+    font-family: 'Nanum Gothic', sans-serif;
+
+    .thumb-wrapper {
+      width: 50%;
+
+      display: grid;
+      grid-template-columns: repeat(3, minmax(200px, 1fr));
+      grid-template-rows: minmax(70px, 1fr);
+      justify-items: center;
+      align-items: center;
+      gap: 30px;
     }
   }
 }
