@@ -1,7 +1,8 @@
 <template>
   <div class="word">
     <play class="play">
-      <div class="play-word">
+      <result v-if="isFinished" @retry="reset()" testType="word">최종 스코어: {{ score }}</result>
+      <div v-else class="play-word">
         <div class="lives">목숨: {{ lives }}</div>
         <div class="level">스코어: {{ score }}</div>
         <div class="current-word">{{ displayWord }}</div>
@@ -14,13 +15,15 @@
 
 <script>
 import _ from 'lodash'
+import utill from '@/utill'
 import makeWords from './makeWords'
 
 import Play from '@/components/play'
+import Result from '@/components/result'
 
 export default {
   name: 'Word',
-  components: { Play },
+  components: { Play, Result },
 
   data() {
     return {
@@ -36,7 +39,7 @@ export default {
   },
 
   mounted() {
-    this.init()
+    this.reset()
   },
 
   computed: {
@@ -72,7 +75,7 @@ export default {
   },
 
   methods: {
-    init() {
+    reset() {
       this.isFinished = false
       this.words = makeWords()
       this.gameInfo = {
@@ -118,6 +121,7 @@ export default {
       this.randomWork()
     },
     fail() {
+      utill.errSound()
       this.gameInfo.lives -= 1
       if (this.gameInfo.lives < 1) {
         this.isFinished = true
@@ -152,6 +156,12 @@ export default {
   height: 100%;
 
   .play {
+    .result-msg {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .play-word {
       width: 50%;
       height: 100%;

@@ -1,8 +1,8 @@
 <template>
   <div class="sequence">
     <play class="play">
-      <result v-if="isFinished" @retry="reset()" :testType="'sequence'">
-        <div>{{playInfo.level}}단계</div>
+      <result v-if="isFinished" @retry="reset()" testType="sequence">
+        <div>최종 단계: {{ playInfo.level }}단계</div>
       </result>
 
       <template v-else>
@@ -37,7 +37,7 @@ export default {
 
       initData: {
         level: 0,
-        speed: 600,
+        speed: 500,
 
         activedTile: 0,
       },
@@ -51,7 +51,7 @@ export default {
         verificateTile: [0], // = [...tile]
       },
 
-      sounds: ['g#2', 'a2', 'a#2', 'b2', 'c3', 'c#3', 'd3', 'd#3', 'e3'],
+      sounds: ['a#2', 'b2', 'c3', 'c#3', 'd3', 'd#3', 'e3', 'e#3', 'f3'],
     }
   },
 
@@ -126,7 +126,7 @@ export default {
     },
 
     btnSound(n) {
-      utill.audio.triggerAttackRelease(this.sounds[n - 1], '60n')
+      utill.audio.triggerAttackRelease(this.sounds[n - 1], '16n')
     },
     errSound() {
       utill.errSound()

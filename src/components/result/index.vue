@@ -61,6 +61,8 @@ export default {
   justify-content: center;
   row-gap: 10px;
 
+  color: #fff;
+
   .test-icon {
     grid-area: test-icon;
 
@@ -74,6 +76,19 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    font-size: 60px;
+    font-weight: bold;
+  }
+  .test-msg {
+    grid-area: test-msg;
+
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
   }
   .btns {
     grid-area: btns;
@@ -81,6 +96,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+
+    color: #000;
 
     .retry,
     .save {
