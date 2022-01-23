@@ -1,14 +1,15 @@
 <template>
   <div class="main">
     <test v-if="isPlayed" :testType="testType"></test>
-    <play v-else class="play">
-      <div class="play-area">
-        <div class="icon">{{ testIcon }}</div>
-        <div class="title">{{ testTitle }}</div>
-        <div v-html="testDescription" class="description"></div>
-        <div class="start-btn" @click="startClick()">시작</div>
-      </div>
-    </play>
+    <template v-else>
+      <play class="play">
+        <div class="play-area">
+          <div class="icon"><my-icon :key="testIcon">{{ testIcon }}</my-icon></div>
+          <div class="title">{{ testTitle }}</div>
+          <div v-html="testDescription" class="description"></div>
+          <div class="start-btn" @click="startClick()">시작</div>
+        </div>
+      </play>
   </div>
 </template>
 
