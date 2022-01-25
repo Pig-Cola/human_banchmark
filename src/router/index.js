@@ -49,12 +49,12 @@ export default new VueRouter({
         //   component: Main,
         //   props: { testType: 'aim' },
         // },
-        // {
-        //   path: 'number',
-        //   name: 'Number',
-        //   component: Main,
-        //   props: { testType: 'number' },
-        // },
+        {
+          path: 'number',
+          name: 'Number',
+          component: Main,
+          props: { testType: 'number' },
+        },
         {
           path: 'word',
           name: 'Word',
@@ -85,6 +85,12 @@ export default new VueRouter({
           name: 'PlayWord',
           component: Test,
           props: { testType: 'word' },
+        },
+        {
+          path: 'number',
+          name: 'PlayNumber',
+          component: Test,
+          props: { testType: 'number' },
         },
       ],
     },
