@@ -51,7 +51,7 @@ export default {
         verificateTile: [0], // = [...tile]
       },
 
-      sounds: ['a#2', 'b2', 'c3', 'c#3', 'd3', 'd#3', 'e3', 'e#3', 'f3'],
+      sounds: ['a#2', 'b2', 'c3', 'c#3', 'd3', 'd#3', 'e3', 'f3', 'f#3'],
     }
   },
 
@@ -60,9 +60,7 @@ export default {
   },
 
   computed: {
-    tileCnt() {
-      return (this.playInfo.level - 1) / 5 + 1
-    },
+    /**@type {()=>number} */
     activedTile() {
       return this.playInfo.activedTile
     },
@@ -96,6 +94,7 @@ export default {
       }
       this.playInfo.verificateTile = [...this.playInfo.tile]
     },
+    /**@type {(n: number)=>Promise<void>} */
     async nextTile(n) {
       await new Promise((res) => {
         setTimeout(() => {
@@ -105,6 +104,7 @@ export default {
       })
     },
 
+    /**@type {(n: number)=>void} */
     clickTile(n) {
       /**@type {number[]} */
       let vTile = this.playInfo.verificateTile
@@ -117,7 +117,9 @@ export default {
         this.btnSound(n)
 
         if (!vTile.length) {
-          this.nextLevel()
+          setTimeout(() => {
+            this.nextLevel()
+          }, 500)
         }
       } else {
         this.errSound()
@@ -125,6 +127,7 @@ export default {
       }
     },
 
+    /**@type {(n: number)=>void} */
     btnSound(n) {
       utill.audio.triggerAttackRelease(this.sounds[n - 1], '16n')
     },
