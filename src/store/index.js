@@ -31,7 +31,7 @@ export default new Vuex.Store({
       reaction: 'power',
       sequence: 'delicious',
       aim: '',
-      number: '',
+      number: 'calculator',
       word: 'font-size',
     },
   },
