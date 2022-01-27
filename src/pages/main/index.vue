@@ -125,16 +125,17 @@ export default {
         align-items: center;
         justify-content: center;
 
-        font-family: 'SANGJUGyeongcheonIsland';
+        font-family: 'BMJUA';
         font-size: 70px;
       }
 
       .description {
         flex: 0 0 50px;
 
-        font-family: 'Nanum Gothic', sans-serif;
-        font-size: 18px;
-        line-height: 25px;
+        font-family: 'Nanum Gothic';
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 30px;
       }
 
       .start-btn {
@@ -146,10 +147,11 @@ export default {
         align-items: center;
         justify-content: center;
 
+        font-family: 'BMJUA';
+        font-size: 18px;
         border-radius: 7px;
         background-color: #ffff00;
         cursor: pointer;
-        font-family: 'SANGJUGyeongcheonIsland';
 
         &:hover {
           background-color: #ffffff;
