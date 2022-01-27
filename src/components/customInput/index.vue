@@ -51,6 +51,9 @@ export default {
 
 <style lang="scss" scoped>
 .custom-input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+
   font-family: 'Nanum Gothic', sans-serif;
   text-align: center;
 
