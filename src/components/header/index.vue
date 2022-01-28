@@ -57,7 +57,7 @@ export default {
 
       font-family: 'BMJUA';
       font-size: 20px;
-      color: white;
+      color: #fff;
       user-select: none;
       cursor: pointer;
     }
