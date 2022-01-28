@@ -56,13 +56,13 @@ export default {
 
   border-radius: 7px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-  transition: transform 300ms, box-shadow 300ms;
+  transition: transform 400ms, box-shadow 400ms;
   cursor: pointer;
   user-select: none;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 1px 6px 20px 3px rgba(0, 0, 0, 0.25);
+    transform: translateY(-10px);
+    box-shadow: 1px 11px 20px 3px rgba(0, 0, 0, 0.25);
 
     .icon {
       .my-icon {

@@ -120,6 +120,7 @@ export default {
       background-color: #ffff00;
       cursor: pointer;
       border-radius: 7px;
+      transition: background-color 400ms;
 
       &:hover {
         background-color: #ffffff;
