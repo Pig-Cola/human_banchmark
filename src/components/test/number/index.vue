@@ -1,7 +1,23 @@
 <template>
   <div class="number">
     <play>
-      <result v-if="isFinished"></result>
+      <result v-if="isFinished" @retry="reset()" testType="number">
+        <div class="wrapper">
+          <div class="display-number">Number: {{ gameInfo.displayNumber }}</div>
+
+          <div class="my-number">
+            <span>Answer: </span>
+            <span
+              v-for="({ text, isVerified }, i) in verifiedNumber"
+              :key="`${i}-${text}-${isVerified}`"
+              :class="{ err: !isVerified }"
+              >{{ text }}</span
+            >
+          </div>
+          <div class="result-msg">최종 단계: {{ gameInfo.level }}단계</div>
+        </div>
+      </result>
+
       <div v-else class="play-number">
         <div v-if="gameInfo.isDisplayed" class="display-area">
           <div class="display-number">{{ gameInfo.displayNumber }}</div>
@@ -13,10 +29,11 @@
             class="num-input"
             :class="{ err: !isNumberString }"
             v-model="gameInfo.myNumber"
-            @keydownEnter="nextLevel()"
+            @keydownEnter="submit()"
             ref="ctInput"
           ></custom-input>
-          <div class="submit-btn">확인</div>
+
+          <div class="submit-btn" @click="submit()">확인</div>
         </div>
       </div>
     </play>
@@ -61,7 +78,12 @@ export default {
 
     /**@type {()=>number} */
     waitTime() {
-      return this.gameInfo.speed + (this.gameInfo.level - 1) * 500
+      return this.gameInfo.speed + (this.gameInfo.level - 1) * 250
+    },
+
+    /**@type {()=>{text:string, isVerified:boolean}[]} */
+    verifiedNumber() {
+      return this.verification(this.gameInfo.displayNumber, this.gameInfo.myNumber)
     },
   },
 
@@ -76,6 +98,7 @@ export default {
         displayNumber,
         myNumber,
       }
+      this.isFinished = false
 
       this.nextLevel()
     },
@@ -111,8 +134,18 @@ export default {
       return this.$refs[key]
     },
     submit() {
+      if (!this.isNumberString) {
+        this.getRef('ctInput').focus()
+        return
+      }
+
       let target = this.gameInfo.displayNumber.toString()
-      target === this.gameInfo.myNumber
+      if (target === this.gameInfo.myNumber) {
+        this.nextLevel()
+        return
+      }
+      this.isFinished = true
+      utill.errSound()
     },
 
     /**@type {(length:number)=>void} */
@@ -125,12 +158,68 @@ export default {
         .join('')
       return utill.toInt(first + rest)
     },
+
+    /**@type {(displayNumber: number, myNumber: string)=>{text:string, isVerified:boolean}[]} */
+    verification(displayNumber, myNumber) {
+      let target = [...displayNumber.toString()]
+      let result = [...myNumber]
+
+      return result.map((v, i) => {
+        let isVerified = false
+        if ((target[i] ?? '') === v) {
+          isVerified = true
+        }
+        return { text: v, isVerified }
+      })
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 .number {
+  .result {
+    .wrapper {
+      width: 100%;
+      height: 100%;
+
+      display: grid;
+      grid-template-areas:
+        'display-number'
+        'my-number'
+        '.'
+        'result-msg'
+        '.';
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: repeat(2, minmax(0, 1fr)) minmax(0, 1fr) minmax(0, 3fr) minmax(0, 2fr);
+      align-items: center;
+      justify-content: center;
+
+      .my-number {
+        grid-area: my-number;
+        white-space: pre;
+        span {
+          &.err {
+            color: #2d2d2d;
+            text-decoration: line-through;
+          }
+        }
+      }
+      .display-number {
+        grid-area: display-number;
+      }
+      .result-msg {
+        grid-area: result-msg;
+      }
+      .my-number,
+      .display-number,
+      .result-msg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
   .play-number {
     width: 50%;
     height: 100%;
@@ -175,6 +264,26 @@ export default {
         height: 50px;
 
         font-size: 20px;
+      }
+
+      .submit-btn {
+        width: 100px;
+        height: 50px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: #ffff00;
+        border-radius: 7px;
+        font-family: 'BMJUA';
+        font-size: 18px;
+
+        cursor: pointer;
+
+        &:hover {
+          background-color: #fff;
+        }
       }
     }
   }

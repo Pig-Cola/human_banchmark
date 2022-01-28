@@ -98,6 +98,7 @@ export default {
     align-items: center;
 
     font-size: 14px;
+    font-weight: bold;
     padding-left: 5px;
     padding-right: 5px;
   }

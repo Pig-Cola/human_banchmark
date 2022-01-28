@@ -32,7 +32,6 @@ export default {
       this.$emit('input', this.inputText)
     },
     keydownEnter() {
-      this.handleInput()
       this.blur()
       this.$emit('keydownEnter')
     },

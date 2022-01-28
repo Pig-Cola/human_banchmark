@@ -2,8 +2,7 @@
   <div class="reaction">
     <play class="play" @mousedown="playClick()" :class="{ r: isRed, g: isGreen }">
       <result v-if="isFinished" @retry="reset()" testType="reaction">
-        <div>평균 반응 속도</div>
-        <div>{{ playInfo.totalScore | int | numberComma }}ms</div>
+        <div>평균 반응 속도: {{ playInfo.totalScore | int | numberComma }}ms</div>
       </result>
       <div v-else class="msg">
         <template v-if="isStarted">
