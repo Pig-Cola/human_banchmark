@@ -193,6 +193,14 @@ export default {
         grid-area: new-word-btn;
         justify-self: start;
       }
+      .existed-word-btn,
+      .new-word-btn {
+        cursor: pointer;
+        
+        &:hover {
+          background-color: #fff;
+        }
+      }
       .lives {
         grid-area: lives;
         justify-self: end;

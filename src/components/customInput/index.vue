@@ -32,7 +32,6 @@ export default {
       this.$emit('input', this.inputText)
     },
     keydownEnter() {
-      this.handleInput()
       this.blur()
       this.$emit('keydownEnter')
     },
@@ -51,6 +50,9 @@ export default {
 
 <style lang="scss" scoped>
 .custom-input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+
   font-family: 'Nanum Gothic', sans-serif;
   text-align: center;
 
