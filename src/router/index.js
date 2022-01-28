@@ -43,12 +43,12 @@ export default new VueRouter({
           component: Main,
           props: { testType: 'sequence' },
         },
-        // {
-        //   path: 'aim',
-        //   name: 'Aim',
-        //   component: Main,
-        //   props: { testType: 'aim' },
-        // },
+        {
+          path: 'aim',
+          name: 'Aim',
+          component: Main,
+          props: { testType: 'aim' },
+        },
         {
           path: 'number',
           name: 'Number',
@@ -91,6 +91,12 @@ export default new VueRouter({
           name: 'PlayNumber',
           component: Test,
           props: { testType: 'number' },
+        },
+        {
+          path: 'aim',
+          name: 'PlayAim',
+          component: Test,
+          props: { testType: 'aim' },
         },
       ],
     },
