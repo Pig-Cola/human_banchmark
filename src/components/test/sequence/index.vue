@@ -5,17 +5,17 @@
         <div>최종 단계: {{ playInfo.level }}단계</div>
       </result>
 
-      <template v-else>
+      <div class="play-wrapper" v-else>
         <div class="level">{{ playInfo.level }}단계</div>
-        <div class="tile-area">
+        <div class="tile-area" :class="{ blink: isBlink }">
           <div
             v-for="i in 9"
             :key="i"
-            :class="['tile', `tile-num-${i}`, { actived: i === activedTile }]"
+            :class="[`tile-num-${i}`, { actived: i === activedTile }]"
             @mousedown="clickTile(i)"
           ></div>
         </div>
-      </template>
+      </div>
     </play>
   </div>
 </template>
@@ -37,7 +37,7 @@ export default {
 
       initData: {
         level: 0,
-        speed: 500,
+        speed: 400,
 
         activedTile: 0,
       },
@@ -52,6 +52,7 @@ export default {
       },
 
       sounds: ['a#2', 'b2', 'c3', 'c#3', 'd3', 'd#3', 'e3', 'f3', 'f#3'],
+      isBlink: false,
     }
   },
 
@@ -60,10 +61,13 @@ export default {
   },
 
   computed: {
+    utill: () => utill,
+
     /**@type {()=>number} */
     activedTile() {
       return this.playInfo.activedTile
     },
+
   },
 
   methods: {
@@ -84,14 +88,14 @@ export default {
     },
 
     async playTile() {
+      this.blink()
       this.playInfo.verificateTile = []
       for (let i of this.playInfo.tile) {
         await this.nextTile(i)
         this.btnSound(i)
-        setTimeout(() => {
-          this.playInfo.activedTile = 0
-        }, 50)
       }
+      await this.utill.waitTime(1000)
+      this.blink()
       this.playInfo.verificateTile = [...this.playInfo.tile]
     },
     /**@type {(n: number)=>Promise<void>} */
@@ -102,6 +106,14 @@ export default {
           res()
         }, this.playInfo.speed)
       })
+      setTimeout(() => {
+        this.playInfo.activedTile = 0
+      }, 50)
+    },
+    async blink() {
+      this.isBlink = true
+      await this.utill.waitTime(50)
+      this.isBlink = false
     },
 
     /**@type {(n: number)=>void} */
@@ -119,7 +131,7 @@ export default {
         if (!vTile.length) {
           setTimeout(() => {
             this.nextLevel()
-          }, 500)
+          }, 1000)
         }
       } else {
         this.errSound()
@@ -194,23 +206,32 @@ export default {
       }
     }
 
-    .tile-area {
+    .play-wrapper {
       width: 100%;
       height: 100%;
 
-      display: grid;
-      grid-template-areas:
-        'tile7 tile8 tile9'
-        'tile4 tile5 tile6'
-        'tile1 tile2 tile3';
-      grid-template-rows: repeat(3, minmax(0, 100px));
-      grid-template-columns: repeat(3, minmax(0, 100px));
-      gap: 10px 10px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
       justify-content: center;
 
-      .tile {
+      .tile-area {
+        width: 100%;
+        height: 100%;
+
+        display: grid;
+        grid-template-areas:
+          'tile7 tile8 tile9'
+          'tile4 tile5 tile6'
+          'tile1 tile2 tile3';
+        grid-template-rows: repeat(3, minmax(0, 100px));
+        grid-template-columns: repeat(3, minmax(0, 100px));
+        gap: 10px 10px;
+        justify-content: center;
+        align-content: center;
+
         @for $i from 1 through 9 {
-          &-num-#{$i} {
+          .tile-num-#{$i} {
             grid-area: tile#{$i};
 
             width: 100%;
@@ -220,7 +241,8 @@ export default {
 
             border-radius: 7px;
             background-color: #00006626;
-            transition: background-color 1s ease-out;
+            box-shadow: none;
+            transition: background-color 1s ease-out, box-shadow 500ms ease-out;
 
             &.actived,
             &:active {
@@ -229,15 +251,22 @@ export default {
             }
           }
         }
+
+        &.blink {
+          @for $i from 1 through 9 {
+            .tile-num-#{$i} {
+              transition: background-color 1s ease-out;
+              box-shadow: inset 0px 0px 20px 0px rgba(255, 255, 255, 0.75);
+            }
+          }
+        }
       }
-    }
 
-    .level {
-      color: #fff;
-      font-size: 40px;
-      font-family: 'Nanum Gothic', sans-serif;
-
-      margin-bottom: 50px;
+      .level {
+        color: #fff;
+        font-size: 40px;
+        font-family: 'Nanum Gothic', sans-serif;
+      }
     }
   }
 }
