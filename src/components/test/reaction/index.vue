@@ -183,8 +183,7 @@ export default {
         font-family: 'Nanum Gothic', sans-serif;
       }
 
-      .next-play,
-      .again {
+      .next-play {
         width: 100px;
         height: 50px;
 
@@ -195,6 +194,7 @@ export default {
         background-color: #ffff00;
         border-radius: 7px;
         cursor: pointer;
+        transition: background-color 400ms;
 
         &:hover {
           background-color: #fff;

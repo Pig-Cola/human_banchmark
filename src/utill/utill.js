@@ -40,6 +40,38 @@ export const errSound = () => {
 //  */
 
 /**
+ * #### 개행 문자를 br로 치환
+ *
+ * @param {string} str
+ * @returns {string} \n이 <br>이 됨
+ */
+export const textLineSpace = (str) => {
+  return str.split('\n').join('<br>')
+}
+
+/**
+ * #### 일정 시간을 기다리는 함수
+ *
+ * async 함수에서 await으로 호출했을때에 해당한다.
+ * 
+ * 단, 정확하게 일치한 시점은 아니며 그 이후일 수 있다.
+ * @type {(ms:number)=>Promise<void>}
+ */
+export const waitTime = async (ms) => {
+  await new Promise((res) => {
+    setTimeout(() => {
+      res()
+    }, ms)
+  })
+}
+
+// /**
+//  *
+//  * for filter
+//  *
+//  */
+
+/**
  * #### 정수형으로 만듬(소수 버림)
  *
  * @param {number|string} n 숫자 또는 숫자로 구성된 문자열
@@ -87,14 +119,4 @@ export const numberComma = (n) => {
     .map((v) => v.join(''))
     .join(',')
   return stringReverse(temp) + rest
-}
-
-/**
- * #### 개행 문자를 br로 치환
- *
- * @param {string} str
- * @returns {string} \n이 <br>이 됨
- */
-export const textLineSpace = (str) => {
-  return str.split('\n').join('<br>')
 }
