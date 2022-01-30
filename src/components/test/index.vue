@@ -4,6 +4,7 @@
     <sequence v-else-if="testType === 'sequence'"></sequence>
     <word v-else-if="testType === 'word'"></word>
     <number v-else-if="testType === 'number'"></number>
+    <aim v-else-if="testType === 'aim'"></aim>
   </div>
 </template>
 
@@ -12,10 +13,11 @@ import Reaction from './reaction'
 import Sequence from './sequence'
 import Word from './word'
 import Number from './number'
+import Aim from './aim'
 
 export default {
   name: 'Test',
-  components: { Reaction, Sequence, Word, Number },
+  components: { Reaction, Sequence, Word, Number, Aim },
   props: {
     testType: {
       type: String,

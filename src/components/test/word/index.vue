@@ -196,7 +196,8 @@ export default {
       .existed-word-btn,
       .new-word-btn {
         cursor: pointer;
-        
+        transition: background-color 400ms;
+
         &:hover {
           background-color: #fff;
         }

@@ -1,21 +1,27 @@
 <template>
   <div class="main">
     <play class="play">
-      <div class="play-area">
-        <div class="icon">
-          <my-icon :key="testIcon">{{ testIcon }}</my-icon>
+      <transition name="main-transition" appear mode="out-in">
+        <div class="play-area">
+          <div class="icon">
+            <my-icon :key="testIcon">{{ testIcon }}</my-icon>
+          </div>
+          <div class="title">{{ testTitle }}</div>
+          <div v-html="testDescription" class="description"></div>
+          <div class="start-btn" @click="startClick()">시작</div>
         </div>
-        <div class="title">{{ testTitle }}</div>
-        <div v-html="testDescription" class="description"></div>
-        <div class="start-btn" @click="startClick()">시작</div>
-      </div>
+      </transition>
     </play>
+
     <!-- select slot -->
-    <div v-if="testType === 'banchmark'" class="select-test-area">
-      <div class="thumb-wrapper">
-        <test-thumb v-for="type in typeList" :testType="type" :key="type"></test-thumb>
+
+    <transition name="main-transition" appear>
+      <div v-if="testType === 'banchmark'" class="select-test-area">
+        <div class="thumb-wrapper">
+          <test-thumb v-for="type in typeList" :testType="type" :key="type"></test-thumb>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -85,6 +91,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.main-transition-enter-active {
+  animation: fade-in 500ms ease-in-out;
+}
+
 .main {
   width: 100%;
 
@@ -152,6 +171,8 @@ export default {
         border-radius: 7px;
         background-color: #ffff00;
         cursor: pointer;
+
+        transition: background-color 400ms;
 
         &:hover {
           background-color: #ffffff;

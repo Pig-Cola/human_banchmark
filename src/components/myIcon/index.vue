@@ -1,5 +1,5 @@
 <template>
-  <i class="my-icon" :class="iconClass"></i>
+  <i class="my-icon" :class="iconClass" @click="click" @mousedown="mousedown"></i>
 </template>
 
 <script>
@@ -16,6 +16,15 @@ export default {
     /**@type {()=>string} */
     iconClass() {
       return this.slotText ? 'icon-' + this.slotText : ''
+    },
+  },
+
+  methods: {
+    click(e) {
+      this.$emit('click', e)
+    },
+    mousedown(e) {
+      this.$emit('mousedown', e)
     },
   },
 }

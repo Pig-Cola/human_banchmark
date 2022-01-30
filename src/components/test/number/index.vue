@@ -278,6 +278,7 @@ export default {
         border-radius: 7px;
         font-family: 'BMJUA';
         font-size: 18px;
+        transition: background-color 400ms;
 
         cursor: pointer;
 
