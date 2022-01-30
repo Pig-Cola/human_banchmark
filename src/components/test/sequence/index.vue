@@ -94,7 +94,7 @@ export default {
         await this.nextTile(i)
         this.btnSound(i)
       }
-      await this.utill.waitTime(1000)
+      await this.utill.waitTime(750)
       this.blink()
       this.playInfo.verificateTile = [...this.playInfo.tile]
     },
@@ -131,7 +131,7 @@ export default {
         if (!vTile.length) {
           setTimeout(() => {
             this.nextLevel()
-          }, 1000)
+          }, 750)
         }
       } else {
         this.errSound()
