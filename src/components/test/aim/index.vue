@@ -21,11 +21,18 @@
             </div>
           </transition-group>
         </transition-group> -->
-        <transition-group name="target-group" class="target-position-area" tag="div">
-          <div class="target-wrapper" v-for="target in gameInfo.targetPosition" :key="target.key">
-            <my-icon class="target" v-if="target.value" @mousedown="clickTarget()">target</my-icon>
+        <div class="target-position-area">
+          <div
+            class="target-wrapper"
+            v-for="target in gameInfo.targetPosition"
+            :key="target.key"
+            v-touch.start
+          >
+            <span class="target" v-if="target.value" @mousedown="clickTarget()" v-touch.start>
+              <my-icon>target</my-icon>
+            </span>
           </div>
-        </transition-group>
+        </div>
       </div>
     </play>
   </div>
@@ -121,19 +128,14 @@ export default {
         this.gameInfo.time.end = +moment()
         return
       }
-      this.next()
       this.utill.audio.triggerAttackRelease('f4', '32n')
+      this.next()
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.row-group-move,
-.target-group-move {
-  transition: transform 150ms ease-out;
-}
-
 .aim {
   width: 100%;
 
@@ -153,7 +155,7 @@ export default {
         'target-position-area';
       grid-template-rows: minmax(0, 30px) minmax(0, 1fr);
       grid-template-columns: minmax(0, 1fr);
-      row-gap: 20px;
+      row-gap: 30px;
 
       align-items: center;
       justify-content: center;
