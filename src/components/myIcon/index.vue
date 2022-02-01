@@ -1,5 +1,5 @@
 <template>
-  <i class="my-icon" :class="iconClass" @click="click" @mousedown="mousedown"></i>
+  <i class="my-icon" :class="iconClass" v-on="$listeners"></i>
 </template>
 
 <script>
@@ -19,14 +19,7 @@ export default {
     },
   },
 
-  methods: {
-    click(e) {
-      this.$emit('click', e)
-    },
-    mousedown(e) {
-      this.$emit('mousedown', e)
-    },
-  },
+  methods: {},
 }
 </script>
 
