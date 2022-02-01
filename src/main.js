@@ -8,13 +8,13 @@ import '@/assets/base.css'
 import '@/assets/icon-font/style.css'
 
 import lodashExtends from '@/service/lodashExtends'
-import filterSetup from '@/filter'
 import MyIcon from '@/components/myIcon'
+import plugIns from '@/plugIns'
 
 Vue.config.productionTip = false
 
 lodashExtends()
-Vue.use(filterSetup)
+Vue.use(plugIns)
 Vue.component('my-icon', MyIcon)
 
 new Vue({

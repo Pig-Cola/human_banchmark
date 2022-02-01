@@ -82,8 +82,7 @@ export default {
       }
 
       let target = this.testType
-      let name = `Play${target[0].toUpperCase() + target.slice(1)}`
-      console.log(name)
+      let name = `Play${target[0].toUpperCase() + target.slice(1)}` 
       this.$router.push({ name })
     },
   },

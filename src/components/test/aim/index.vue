@@ -6,7 +6,7 @@
       </result>
       <div v-else class="play-aim">
         <div class="remnant-target">남은 표적 수 : {{ remnantTargetCnt }}개</div>
-        <transition-group name="row-group" class="target-position-area" tag="div">
+        <!-- <div name="row-group" class="target-position-area" tag="div">
           <transition-group
             name="target-group"
             tag="div"
@@ -20,7 +20,19 @@
               >
             </div>
           </transition-group>
-        </transition-group>
+        </transition-group> -->
+        <div class="target-position-area">
+          <div
+            class="target-wrapper"
+            v-for="target in gameInfo.targetPosition"
+            :key="target.key"
+            v-touch.start
+          >
+            <span class="target" v-if="target.value" @mousedown="clickTarget()" v-touch.start>
+              <my-icon>target</my-icon>
+            </span>
+          </div>
+        </div>
       </div>
     </play>
   </div>
@@ -44,7 +56,8 @@ export default {
 
       gameInfo: {
         targetCnt: 0,
-        targetPosition: [{ value: [{ value: false, key: '' }], key: '' }],
+        targetPosition: [{ value: false, key: '' }],
+        // targetPosition: [{ value: [{ value: false, key: '' }], key: '' }],
         time: {
           start: 0,
           end: 0,
@@ -53,7 +66,7 @@ export default {
 
       gameData: {
         targetMaxCtn: 30,
-        targetPositionDetail: { row: 20, column: 50 },
+        targetPositionDetail: { row: 20, column: 30 },
       },
     }
   },
@@ -81,25 +94,22 @@ export default {
       this.isFinished = false
 
       let { row, column } = this.gameData.targetPositionDetail
+      /**@type {boolean[]} */
       let targetPosition = Array(row * column).fill(false)
       targetPosition[0] = true
 
       targetPosition = _(targetPosition)
-        .map((value, i) => ({ value, key: `target-key-${i}` }))
-        .chunk(column)
-        .map((value, i) => ({ value, key: `row-${i}` }))
+        .map((value, i) => ({ value, key: `targetKey${i}` }))
         .value()
 
       this.gameInfo = {
         targetCnt: 0,
-        targetPosition: [],
+        targetPosition,
         time: {
           start: +moment(),
           end: 0,
         },
       }
-
-      this.gameInfo.targetPosition = targetPosition
       this.next()
     },
 
@@ -109,23 +119,16 @@ export default {
     },
     randomPosition() {
       let targetPosition = this.gameInfo.targetPosition
-      targetPosition = _(targetPosition)
-        .map(({ value, key }) => ({
-          value: _(value).shuffle().value(),
-          key,
-        }))
-        .shuffle()
-        .value()
-
-      this.gameInfo.targetPosition = targetPosition
+      this.gameInfo.targetPosition = _(targetPosition).shuffle().value()
     },
 
     clickTarget() {
-      this.utill.audio.triggerAttackRelease('f4', '32n')
       if (!(this.remnantTargetCnt - 1)) {
         this.isFinished = true
         this.gameInfo.time.end = +moment()
+        return
       }
+      this.utill.audio.triggerAttackRelease('f4', '32n')
       this.next()
     },
   },
@@ -133,11 +136,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.row-group-move,
-.target-group-move {
-  transition: transform 150ms ease-out;
-}
-
 .aim {
   width: 100%;
 
@@ -157,7 +155,7 @@ export default {
         'target-position-area';
       grid-template-rows: minmax(0, 30px) minmax(0, 1fr);
       grid-template-columns: minmax(0, 1fr);
-      row-gap: 20px;
+      row-gap: 30px;
 
       align-items: center;
       justify-content: center;
@@ -173,25 +171,44 @@ export default {
         font-size: 25px;
         font-weight: bold;
       }
+      // .target-position-area {
+      //   grid-area: target-position-area;
+
+      //   width: 100%;
+      //   height: 100%;
+
+      //   display: flex;
+      //   flex-flow: column nowrap;
+      //   align-items: stretch;
+      //   justify-content: space-between;
+      //   .rows {
+      //     display: flex;
+      //     align-items: center;
+      //     justify-content: space-between;
+      //     .columns {
+      //       .target {
+      //         color: #fff;
+      //         font-size: 100px;
+      //       }
+      //     }
+      //   }
+      // }
       .target-position-area {
         grid-area: target-position-area;
 
         width: 100%;
         height: 100%;
 
-        display: flex;
-        flex-flow: column nowrap;
-        align-items: stretch;
-        justify-content: space-between;
-        .rows {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          .columns {
-            .target {
-              color: #fff;
-              font-size: 100px;
-            }
+        display: grid;
+        grid-template-rows: repeat(20, minmax(0, 1fr));
+        grid-template-columns: repeat(30, minmax(0, 1fr));
+        align-items: center;
+        justify-items: center;
+
+        .target-wrapper {
+          .target {
+            color: #fff;
+            font-size: 100px;
           }
         }
       }
